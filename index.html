@@ -47,16 +47,15 @@ function action(name,uri,symbol,cls){
  const link=document.createElement('a');link.href=uri;link.className='action'+(cls?' '+cls:'');
  const ic=document.createElement('span');ic.className='symbol';ic.textContent=symbol;
  const txt=document.createElement('span');txt.textContent=name;link.append(ic,txt);
- if(uri.startsWith('https://')&&!uri.startsWith('https://wa.me/')){link.target='_blank';link.rel='noopener noreferrer'}
+ if(uri.startsWith('https://')&&!uri.startsWith('https://web.whatsapp.com/')){link.target='_blank';link.rel='noopener noreferrer'}
  $('contacts').append(link);
 }
-for(const [label,num] of [['Atención al cliente',a.phone],['Reclamos',a.phone2]]){
+const isMobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+for(const [label,num] of [['ATENCIÓN AL CLIENTE',a.phone],['RECLAMOS',a.phone2]]){
  const digits=String(num||'').replace(/\D/g,'');
  const waNumber=digits.length===10&&digits.startsWith('11')?'549'+digits:digits;
- if(waNumber.length>=8)action(label+' · '+num,'https://wa.me/'+waNumber,'◉','whatsapp');
+ if(waNumber.length>=8){const link=isMobile?'whatsapp://send?phone='+waNumber:'https://web.whatsapp.com/send?phone='+waNumber;action(label+' · '+num,link,'◉','whatsapp');}
 }
-const wa=String(a.whatsapp||'').replace(/\D/g,'');
-if(wa.length>=8){const wat=wa.length===10&&wa.startsWith('11')?'549'+wa:wa;action('WhatsApp · '+(a.whatsapp||wa),'https://wa.me/'+wat,'◉','whatsapp')}
 if(/^https:\/\/(www\.)?(facebook\.com|fb\.com|fb\.me)\//i.test(a.facebook||''))action('Facebook de la agencia',a.facebook,'f','');
 for(const [name,href,symbol,valid] of [['Instagram',a.instagram,'◎',/^https:\/\/(www\.)?instagram\.com\//i],['TikTok',a.tiktok,'♪',/^https:\/\/(www\.)?tiktok\.com\//i]]){if(valid.test(href||''))action(name,href,symbol,'');else{const span=document.createElement('div');span.className='action';span.style.opacity='.65';span.textContent=symbol+'  '+name+' · Perfil pendiente de cargar';$('contacts').append(span)}}
 if(a.address){$('addressSection').hidden=false;const m=document.createElement('a');m.className='action';m.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(a.address);m.target='_blank';m.rel='noopener noreferrer';m.textContent='📍 '+a.address+' · Ver en Google Maps';$('addressLink').append(m)}
