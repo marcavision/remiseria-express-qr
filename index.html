@@ -47,7 +47,7 @@ function action(name,uri,symbol,cls){
  const link=document.createElement('a');link.href=uri;link.className='action'+(cls?' '+cls:'');
  const ic=document.createElement('span');ic.className='symbol';ic.textContent=symbol;
  const txt=document.createElement('span');txt.textContent=name;link.append(ic,txt);
- if(uri.startsWith('https://')){link.target='_blank';link.rel='noopener noreferrer'}
+ if(uri.startsWith('https://')&&!uri.startsWith('https://wa.me/')){link.target='_blank';link.rel='noopener noreferrer'}
  $('contacts').append(link);
 }
 for(const [label,num] of [['Atención al cliente',a.phone],['Reclamos',a.phone2]]){
