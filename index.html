@@ -7,7 +7,7 @@
 *{box-sizing:border-box}body{margin:0}main{max-width:600px;margin:0 auto;padding:0 16px 30px}
 header{background:linear-gradient(145deg,#123b69,#075da7);border-radius:0 0 24px 24px;padding:32px 18px 29px;color:#fff;text-align:center;box-shadow:0 12px 28px #123b691c}
 .logo{display:block;width:100%;max-height:none;object-fit:contain;margin:0 auto 20px;border:0;border-radius:0;padding:0;background:transparent}
-h1{font-size:29px;line-height:1.1;margin:4px 0 8px;letter-spacing:-.5px}header p{margin:0;opacity:.9}
+header p{margin:0;font-size:clamp(20px,4vw,28px);font-weight:700;line-height:1.3;opacity:1}
 section{background:#fff;padding:21px 21px;margin:17px 0 0;border-radius:18px;box-shadow:0 6px 20px #123b690c}
 h2{font-size:20px;margin:0 0 15px}h3{font-size:15px;margin:0 0 9px}
 .text{line-height:1.55;color:#46607c;font-size:14px}
@@ -25,7 +25,7 @@ a.whatsapp{background:#ebfaf3;border-color:#bdebd0;color:#166b46}
 #vehicle{display:none}#vehicle.visible{display:block}
 .note{text-align:center;font-size:12px;color:#617992;margin:20px 4px 0;line-height:1.55}
 #commitment{white-space:pre-line;line-height:1.7;color:#3e5873}
-</style></head><body><header><img id="logo" class="logo" hidden alt="Logo de la agencia"><h1 id="agencyName"></h1><p>Su confianza, nuestro compromiso.</p></header><main>
+</style></head><body><header><img id="logo" class="logo" hidden alt="Logo de la agencia"><p>Su confianza, nuestro compromiso.</p></header><main>
 <section id="vehicle"><h2>Identificación del vehículo</h2><div class="vehicle"><div><small>Móvil</small><strong id="unit"></strong></div><div><small>Año</small><strong id="year"></strong></div><div><small>Chofer</small><strong id="driverName"></strong></div><div><small>Patente</small><strong id="plate" class="plate"></strong></div></div></section>
 <section><h2>Atención y reclamos</h2><div id="contacts"></div></section>
 <section id="addressSection" hidden><h2>Encontranos</h2><div id="addressLink"></div></section>
@@ -38,7 +38,7 @@ a.whatsapp{background:#ebfaf3;border-color:#bdebd0;color:#166b46}
 'use strict';
 const data=JSON.parse(document.getElementById('payload').textContent);
 const a=data.agency||{}; const $=id=>document.getElementById(id);
-$('agencyName').textContent=a.name||'Agencia de remises'; document.title=(a.name||'Remisería')+' | Atención y reclamos';
+document.title=(a.name||'Remisería')+' | Atención y reclamos';
 if(a.logo&&/^data:image\/(png|jpeg|webp);base64,/.test(a.logo)){$('logo').src=a.logo;$('logo').hidden=false;}
 const mobile=new URLSearchParams(location.search).get('movil');
 const found=(data.drivers||[]).find(x=>x.id===mobile);
