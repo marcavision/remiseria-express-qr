@@ -50,9 +50,10 @@ function action(name,uri,symbol,cls){
  if(uri.startsWith('https://')){link.target='_blank';link.rel='noopener noreferrer'}
  $('contacts').append(link);
 }
-for(const [label,num,sym] of [['Atención al cliente',a.phone,'☎'],['Reclamos',a.phone2,'☎']]){
- const v=String(num||'').replace(/[^0-9+]/g,'');
- if(v.replace(/\D/g,'').length>=8)action(label+' · '+num,'tel:'+v,sym,'');
+for(const [label,num] of [['Atención al cliente',a.phone],['Reclamos',a.phone2]]){
+ const digits=String(num||'').replace(/\D/g,'');
+ const waNumber=digits.length===10&&digits.startsWith('11')?'549'+digits:digits;
+ if(waNumber.length>=8)action(label+' · '+num,'https://wa.me/'+waNumber,'◉','whatsapp');
 }
 const wa=String(a.whatsapp||'').replace(/\D/g,'');
 if(wa.length>=8){const wat=wa.length===10&&wa.startsWith('11')?'549'+wa:wa;action('WhatsApp · '+(a.whatsapp||wa),'https://wa.me/'+wat,'◉','whatsapp')}
